@@ -5,7 +5,7 @@ let pp = await conn.profilePictureUrl(who).catch(_ => hwaifu.getRandom())
 let name = await conn.getName(who)
 
   const sentMsg = await conn.sendContactArray(m.chat, [
-    [`${nomorown}`, `${await conn.getName(nomorown+'@s.whatsapp.net')}`, `💌 Developer Bot `, `helo`, `andikaprasetyasutanto87@gmail.com`, `🇮🇩 Indonesia`, `📍 https://github.com/Uzoy`, `👤 owner andibot`],
+    [`${nomorown}`, `${await conn.getName(nomorown+'@s.whatsapp.net')}`, `💌 Developer Bot `, `helo`, `andikaprasetyasutanto87@gmail.com`, `🇮🇩 Indonesia`, `📍 https://github.com/Uzoy`, `👤 owner yaebot`],
     [`${conn.user.jid.split('@')[0]}`, `${await conn.getName(conn.user.jid)}`, `🎈 ʙᴏᴛ ᴡʜᴀᴛsᴀᴘᴘ`, `📵 ᴅᴏɴᴛ sᴘᴀᴍ/ᴄᴀʟʟ `, `yesthing`, `🇮🇩 Indonesia`, `📍 https://github.com/Uzoy/Elaina-MultiDevice`, `bot biasa☺`]
   ], fkontak)
   await m.reply(`ʜᴇʟʟᴏ @${m.sender.split(`@`)[0]} ᴛʜᴀᴛs ᴍʏ ᴏᴡɴᴇʀ ᴅᴏɴᴛ sᴘᴀᴍ ᴏʀ ʏᴏᴜ ᴡɪʟʟ ʙᴇ ʙʟᴏᴄᴋᴇᴅ`)
