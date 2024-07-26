@@ -5,8 +5,8 @@ let pp = await conn.profilePictureUrl(who).catch(_ => global.pic)
 let name = await conn.getName(who)
 
   const sentMsg = await conn.sendContactArray(m.chat, [
-    [`${nomorown}`, `${await conn.getName(nomorown+'@s.whatsapp.net')}`, `💌 Developer Bot `, `ɴᴏᴛ ғᴀᴍᴏᴜs ᴊᴜsᴛ ᴀʟᴏɴᴇ ʙᴏʏ`, `yanxiao021@gmail.com`, `🇮🇩 Indonesia`, `📍 https://github.com/ImYanXiao`, `👤 ᴏᴡɴᴇʀ ᴇʟᴀɪɴᴀ ʙᴏᴛ`],
-    [`${conn.user.jid.split('@')[0]}`, `${await conn.getName(conn.user.jid)}`, `🎈 ʙᴏᴛ ᴡʜᴀᴛsᴀᴘᴘ`, `📵 ᴅᴏɴᴛ sᴘᴀᴍ/ᴄᴀʟʟ ᴍᴇ 😢`, `ɴᴏᴛʜɪɴɢ`, `🇮🇩 Indonesia`, `📍 https://github.com/ImYanXiao/Elaina-MultiDevice`, `ʜᴀɴʏᴀ ʙᴏᴛ ʙɪᴀsᴀ ʏᴀɴɢ ᴋᴀᴅᴀɴɢ sᴜᴋᴀ ᴇʀᴏʀ ☺`]
+    [`${nomorown}`, `${await conn.getName(nomorown+'@s.whatsapp.net')}`, `Developer Bot `, `wo`, `andikaprasetyasutanto87@gmail.com`, `🇮🇩 Indonesia`, ` https://github.com/Uzoy`, `owenr`],
+    [`${conn.user.jid.split('@')[0]}`, `${await conn.getName(conn.user.jid)}`, `ʙᴏᴛ ᴡʜᴀᴛsᴀᴘᴘ`, `wu`, `we`, `🇮🇩 Indonesia`, ` https://github.com/Uzoy/Elaina-MultiDevice`, `bot sukq errpr`]
   ], m)
   await m.reply(`ʜᴇʟʟᴏ @${m.sender.split(`@`)[0]} ᴛʜᴀᴛs ᴍʏ ᴏᴡɴᴇʀ ᴅᴏɴᴛ sᴘᴀᴍ ᴏʀ ʏᴏᴜ ᴡɪʟʟ ʙᴇ ʙʟᴏᴄᴋᴇᴅ`)
   } 
