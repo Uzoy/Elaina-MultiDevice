@@ -63,23 +63,23 @@ global.ppulsa = '6282284519515' //Nomor SimCard Yang Kamu Pake
 global.psaweria = '-' //Link Saweriamu Kalo Nggada Ketik - aja
 
 /*============== NOMOR ==============*/
-global.nomorbot = '-' //Nomor Bot
-global.nomorown = '-' //Nomor Owner
+global.nomorbot = '6283189131519' //Nomor Bot
+global.nomorown = '6282284519515' //Nomor Owner
 global.namebot = 'AndiBot' //Nama Bot
-global.nameown = '-' // Nama Owner
+global.nameown = 'Andika' // Nama Owner
 
 
 /*============== STAFF ==============*/
 global.owner = [
-  ['-', 'Developer Owner', true] //Ganti jd nomormu sama Namamu
+  ['6282284519515', 'Developer Owner', true] //Ganti jd nomormu sama Namamu
   // [number, dia creator/owner?, dia developer?] ex= [62123456789, "siapa kek", false]
 ] // Put your number here
 global.mods = [] // Want some help?
 global.prems = [] // Premium user bukan disini nambahinnya, ketik .addprem @user 10
 
 
-global.lolkey = 'apikeymu'
-global.googlegemini = 'silahkan diisi token masing masing' // https://aistudio.google.com/app/apikey
+global.lolkey = 'dc60b3d70a9a1fcf0efa7123'
+global.googlegemini = 'AIzaSyBR2A8uBAcwPRua1lgkf9BcgEYZMwIa2sw' // https://aistudio.google.com/app/apikey
 /*============== API ==============*/
 // Tambahin Rest Apinya Sendiri Krn yg saya hapus apinya sudah Mati
 global.APIs = { // API Prefix
@@ -89,7 +89,7 @@ global.APIs = { // API Prefix
 }
 global.APIKeys = { // APIKey Here
   // 'https://website': 'apikey'
-  'https://api.lolhuman.xyz': 'Apikeymu'
+  'https://api.lolhuman.xyz': 'dc60b3d70a9a1fcf0efa7123'
 }
 // Kata APIKEY itu isi dengan apikeymu, dengan beli ke website itu
 
@@ -154,7 +154,7 @@ global.hsquere = ['⛶','❏','⫹⫺']
 
 /*============== STICKER WM ==============*/
 global.stickpack = '.'
-global.packname = `☂︎\nY\na\ne\n-\nb\no\n-\nt\n⫹⫺ Whatsapp BOT\nwa.me/${global.nomorbot}`
+global.packname = `☂︎\nY\na\ne\n-\nb\no\nt\n⫹⫺ Whatsapp BOT\nwa.me/${global.nomorbot}`
 global.requestpack = 'Sticker Request By '
 
 global.multiplier = 38 // The higher, The harder levelup
