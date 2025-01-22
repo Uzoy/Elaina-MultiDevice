@@ -20,6 +20,6 @@ const pre = generateWAMessageFromContent(m.chat, { liveLocationMessage:{
 }}, { quoted: fakes })
 return conn.relayMessage(m.chat, pre.message, { messageId: pre.key.id })
 }
-handler.customPrefix = /^(tes|bot|elaina|test)$/i
+handler.customPrefix = /^(tes|bot|yae|test)$/i
 handler.command = new RegExp
 export default handler
