@@ -40,7 +40,6 @@ import readline from 'readline'
 import { format } from 'util'
 import pino from 'pino'
 import ws from 'ws'
-import qrcode from 'qrcode-terminal';
 const {
     useMultiFileAuthState,
     DisconnectReason,
@@ -124,6 +123,7 @@ const { state, saveCreds } = await useMultiFileAuthState('./sessions')
 const connectionOptions = {
         version,
         logger: pino({ level: 'fatal' }), 
+        printQRInTerminal: !usePairingCode, 
 	// Optional If Linked Device Could'nt Connected
 	// browser: ['Mac OS', 'chrome', '125.0.6422.53']
         browser: ['Mac OS', 'safari', '5.1.10'],
@@ -166,14 +166,6 @@ const connectionOptions = {
 }
 
 global.conn = makeWASocket(connectionOptions)
-
-conn.ev.on('connection.update', (update) => {
-  const { qr } = update;
-  if (qr) {
-    qrcode.generate(qr, { small: true });
-  }
-});
-
 conn.isInit = false
 
 if (usePairingCode && !conn.authState.creds.registered) {
