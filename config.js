@@ -78,7 +78,11 @@ global.owner = [
 ] // Put your number here
 global.mods = [] // Want some help?
 global.prems = [] // Premium user bukan disini nambahinnya, ketik .addprem @user 10
+global.moderatorgh = [ '085282530851', 'RexxHayanasi', true]
 
+/*ini nomor wa Collaborator Github Elaina ImYanXiao
+jangan diganti jika bot mu ada error tinggal .report aja nant ada error bukan hanya ke owner bot yang kekirm moderator juga tau error Elaina AI Ada dimana 
+*/
 
 global.lolkey = 'dc60b3d70a9a1fcf0efa7123'
 global.googlegemini = 'AIzaSyBR2A8uBAcwPRua1lgkf9BcgEYZMwIa2sw' // https://aistudio.google.com/app/apikey
