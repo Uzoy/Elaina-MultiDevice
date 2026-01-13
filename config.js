@@ -60,12 +60,12 @@ global.config = {
 
     /*============== STAFF ==============*/
     owner: [
-[ '6285282530851', 'RexxHayanasiDEV', true ] // Ganti Nomer Lu Sama Nama Lu
+[ '6282284519515', 'dika', true ] // Ganti Nomer Lu Sama Nama Lu
 ],
 
 
     /*============== BOT ==============*/
-    namebot: "Elaina - MultiDevice",
+    namebot: "Yae",
     
     /*============== PAIRING ==============*/
     pairingNumber: "-", // Nomor Bot yang mau di pairing
@@ -85,13 +85,13 @@ global.config = {
     },
 
     /*============== TEXT ==============*/
-    watermark: 'Elaina - MultiDevice',
-    author: 'ImYanXiao',
+    watermark: 'Yae',
+    author: 'Dika',
     loading: 'Silahkan ditunggu...',
-    errorMsg: 'Error :)',
+    errorMsg: 'Error',
 
     stickpack: 'Made With',
-    stickauth: 'Elaina-BOT',
+    stickauth: 'Yae',
 
     // Untuk fitur topup [ Need IP VPS ] & pembayaran premium otomatis,
     OK: {
@@ -104,10 +104,10 @@ global.config = {
 
 
 /*============== WATERMARK ==============*/
-global.wm = '                「 Elaina 𝙱𝙾𝚃 汉  」' // wm1
-global.wm2 = '꒷︶꒷꒥꒷ ‧₊˚ ꒰ฅ˘ᴇʟᴀɪɴᴀ˘ฅ ꒱ ‧₊˚꒷︶꒷꒥꒷' // wm2
-global.wm3 = '• elaina ᴍᴜʟᴛɪᴅᴇᴠɪᴄᴇ' // wm3
-global.namedoc = 'sᴀɴsᴍᴀʜɪʀᴜ' // nama document
+global.wm = '                「 Yae 𝙱𝙾𝚃 汉  」' // wm1
+global.wm2 = '꒷︶꒷꒥꒷ ‧₊˚ ꒰ฅ˘𝚢𝚊𝚎˘ฅ ꒱ ‧₊˚꒷︶꒷꒥꒷' // wm2
+global.wm3 = '• 🅈🄰🄴' // wm3
+global.namedoc = '𝓴𝓸𝓷𝓬𝓮𝓴 𝓽𝓪𝓷𝓰𝓰𝓪𝓵𝓪𝓶' // nama document
 global.titlebot = '🎋 ┊ sɪᴍᴘʟᴇ ᴡʜᴀᴛsᴀᴘᴘ ʙᴏᴛ'
 global.botdate = `• ᴅᴀʏ's: ${week} ${date}`
 global.bottime = `ᴛɪᴍᴇ: ${wktuwib}`
