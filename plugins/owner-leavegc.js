@@ -1,17 +1,12 @@
-let handler = async (m, { conn, args, command, text }) => {
-  // LID helpers usage
-  const sender = (global.decodeSender ? global.decodeSender(m, conn) : (conn?.decodeJid ? conn.decodeJid(m.sender) : m.sender));
-  const chatId = (global.decodeChat ? global.decodeChat(m, conn) : (conn?.decodeJid ? conn.decodeJid(m.chat) : m.chat));
-
-  // LID injection removed (now using global helpers)
-
-	let group = text ? text : chatId
-        await conn.reply(group, 'Byee Bot akan pergi , , ! (≧ω≦)ゞ', null) 
+let handler = async (m, { conn, args, command }) => {
+	let group = m.chat
+        await m.reply('Sayonaraa.....👋😃', m.chat) 
         await  conn.groupLeave(group)
-        m.reply('S u k s e s')
-}
-handler.help = ['leavegc']
+        }
+handler.help = ['leavegc', 'out']
 handler.tags = ['owner']
 handler.command = /^(out|leavegc)$/i
-handler.owner = true
+
+handler.rowner = true
+
 export default handler

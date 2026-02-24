@@ -1,44 +1,28 @@
-import { areJidsSameUser } from '@rexxhayanasi/elaina-baileys'
-
-let handler = async (m, { conn, participants, isOwner, isAdmin, args }) => {
-    if (!(isOwner || isAdmin)) return m.reply('Hanya admin atau owner yang dapat menggunakan perintah ini.');
-
-    let users = m.mentionedJid.filter(u => !areJidsSameUser(u, conn.user.jid));
-
-    if (users.length === 0) return m.reply('Tag user yang ingin di-unban.');
-
-    let currentTime = Date.now();
-
-    for (let user of users) {
-        if (user.endsWith('@s.whatsapp.net')) {
-            let userRecord = global.db.data.users[user];
-
-            if (userRecord) {
-                if (userRecord.banned) {
-                    userRecord.banned = false;
-                    userRecord.bannedTime = 0; 
-                    m.reply(`Sukses di-unban @${user.split('@')[0]}`, false, { mentions: [user] });
-                    conn.reply(user, 'Kamu telah di-unban!', null);
-                } else {
-                    m.reply('Pengguna ini tidak dalam keadaan banned.');
-                }
-            } else {
-                m.reply('Pengguna tidak ditemukan dalam database.');
-            }
+let handler = async (m, { conn, text, isROwner}) => {
+    if (!text) throw 'Who wants to be unbanned?'
+    if (!isROwner) return conn.reply(m.chat, 'Lu Tuh Bukan Owner Jan So A6 ', m) 
+    let who;
+    if (m.isGroup) {
+        if (m.mentionedJid.length > 0) {
+            who = m.mentionedJid[0];
         } else {
-            m.reply('User yang ditargetkan tidak ditemukan di grup.');
+            let cleanedNumber = text.replace(/\D/g, ''); 
+            who = `${cleanedNumber}@s.whatsapp.net`;
         }
+    } else {
+        let cleanedNumber = text.replace(/\D/g, '');
+        who = `${cleanedNumber}@s.whatsapp.net`;
     }
+
+    let users = db.data.users;
+    if (!users[who]) throw 'Pengguna tidak ditemukan';
+
+    users[who].banned = false;
+    conn.reply(m.chat, `Pengguna dengan nomor ${who} telah diunban!`, m);
 }
 
-handler.help = ['unban']
-handler.tags = ['group']
-handler.command = /^(unban)$/i
-
-handler.group = true
-handler.admin = true
-handler.botAdmin = true
+handler.help = ['unban <nomor>']
+handler.tags = ['owner']
+handler.command = /^unban(user)?$/i
 
 export default handler
-
-const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms))

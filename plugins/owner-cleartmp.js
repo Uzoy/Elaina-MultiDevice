@@ -1,31 +1,29 @@
-import { readdirSync, rmSync, statSync, existsSync } from 'fs'
+import { tmpdir } from 'os'
+import path, { join } from 'path'
+import {
+  readdirSync,
+  statSync,
+  unlinkSync,
+  existsSync,
+  readFileSync,
+  watch
+} from 'fs'
+let handler = async (m, { conn, usedPrefix: _p, __dirname, args }) => {
 
-let handler = async (m, { conn }) => {
-    const directories = ['./tmp', './.chache']
-    const filesToDelete = ['core']
+conn.reply(m.chat, 'Succes !', m)
 
-    directories.forEach(dir => {
-        if (existsSync(dir)) {
-            readdirSync(dir).forEach(file => {
-                let filePath = `${dir}/${file}`
-                rmSync(filePath, { force: true, recursive: true })
-            })
-        }
-    })
-
-    filesToDelete.forEach(file => {
-        if (existsSync(file) && statSync(file).isFile()) {
-            rmSync(file, { force: true })
-        }
-    })
-
-    let pesan = `Folder \`\`\`tmp\`\`\`, \`\`\`.chache\`\`\` dan file \`\`\`core\`\`\` telah dibersihkan!`
-    await m.reply(pesan)
+const tmp = [tmpdir(), join(__dirname, '../tmp')]
+  const filename = []
+  tmp.forEach(dirname => readdirSync(dirname).forEach(file => filename.push(join(dirname, file))))
+  return filename.map(file => {
+    const stats = statSync(file)
+    unlinkSync(file)
+})
 }
-
 handler.help = ['cleartmp']
 handler.tags = ['owner']
-handler.command = /^(c(lear)?tmp)$/i
-handler.mods = true
+handler.command = /^(cleartmp)$/i
+
+handler.rowner = true
 
 export default handler
