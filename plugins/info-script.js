@@ -2,7 +2,7 @@ var handler = async(m, { conn }) => {
 
 let str = `*https://github.com/ImYanXiao/Elaina-MultiDevice*`
 let letoy = hwaifu.getRandom()
-return conn.createThumbnail(m.chat, str, fakes, { title: 'ᴡᴀɴᴛ sᴏᴜʀᴄᴇ ᴄᴏᴅᴇ ᴛʜɪs ʙᴏᴛ?', ads:false, large:true, thumbnail: await getBuffer(letoy), url: social}) 
+return conn.reply(m.chat, str, fakes, { externalAdReply : { title: 'ᴡᴀɴᴛ sᴏᴜʀᴄᴇ ᴄᴏᴅᴇ ᴛʜɪs ʙᴏᴛ?',mediaType: 1, renderLargeThumbnail: true, thumbnail: await getBuffer(letoy), socialUrl: social}) 
           }
 handler.help = ['source code']
 handler.tags = ['info']
