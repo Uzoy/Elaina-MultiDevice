@@ -1,19 +1,34 @@
-export async function before(m) {
-    if (m.isBaileys || m.fromMe) return
-    let chat = global.db.data.chats[m.chat]
-    let setting = global.db.data.settings[conn.user.jid]
+import { downloadContentFromMessage } from '@adiwajshing/baileys';
 
-    if (chat.viewonce && m.isGroup && m.mtype == 'viewOnceMessageV2') {
-        let val = { ...m }
-        let ephemeral = conn.chats[m.chat]?.metadata?.ephemeralDuration || conn.chats[m.chat]?.ephemeralDuration || false
-        let msg = val.message?.viewOnceMessage?.message || val.message?.viewOnceMessageV2?.message
-        delete msg[Object.keys(msg)[0]].viewOnce
-        val.message = msg
-        if (setting.composing)
-            await this.sendPresenceUpdate('composing', m.chat)
-        if (setting.autoread)
-            await this.readMessages([m.key])
-        await this.sendMessage(m.chat, { forward: val }, { quoted: m, ephemeralExpiration: ephemeral })
+export async function before(m, { isAdmin, isBotAdmin }) {
+    let chat = global.db.data.chats[m.chat];
+
+    if (/^[.~#/\$,](read)?viewonce/.test(m.text)) return;
+    if (!chat.viewonce || chat.isBanned) return;
+
+    if (m.mtype == 'viewOnceMessageV2') {
+        let msg = m.message.viewOnceMessageV2.message;
+        let type = Object.keys(msg)[0];
+        let media;
+        if (type === 'imageMessage') {
+            media = await downloadContentFromMessage(msg[type], 'image');
+        } else if (type === 'videoMessage') {
+            media = await downloadContentFromMessage(msg[type], 'video');
+        } else if (type === 'audioMessage') {
+            media = await downloadContentFromMessage(msg[type], 'audio');
+        }
+
+        let buffer = Buffer.from([]);
+        for await (const chunk of media) {
+            buffer = Buffer.concat([buffer, chunk]);
+        }
+
+        if (/video/.test(type)) {
+            return this.sendFile(m.chat, buffer, 'media.mp4', msg[type].caption || '', m);
+        } else if (/image/.test(type)) {
+            return this.sendFile(m.chat, buffer, 'media.jpg', msg[type].caption || '', m);
+        } else if (/audio/.test(type)) {
+            return this.sendFile(m.chat, buffer, 'media.mp3', msg[type].caption || '', m);
+        }
     }
-    return !0
 }

@@ -1,89 +1,28 @@
-import { areJidsSameUser } from '@rexxhayanasi/elaina-baileys'
-
-let handler = async (m, { conn, isOwner, isAdmin, args }) => {
- if (!isOwner) return m.reply('Command ini hanya dapat digunakan oleh *Owner* !!')
-
-  if (!args.length && !m.mentionedJid && !m.quoted)
-    return m.reply('Tolong sebutkan user/nomor yang ingin dibanned.\nContoh: #ban 62812xxxxx 3')
-
-  // Ambil durasi (hari) dari argumen terakhir jika angka
-  let days = 0
-  if (args.length) {
-    const last = args[args.length - 1]
-    if (/^\d+$/.test(last)) {
-      days = parseInt(last)
-      args.pop()
-    }
-  }
-  const nz = global.normalizeJid
-    ? (v) => global.normalizeJid(v)
-    : (v) => {
-        if (!v) return ''
-        v = String(v).trim()
-        if (/@(s\.whatsapp\.net|lid\.whatsapp\.net|g\.us)$/.test(v)) return v
-        if (/^\d{5,}$/.test(v)) return v + '@s.whatsapp.net'
-        return ''
-      }
-
-  const groupMetadata = m.isGroup ? (conn.chats[m.chat]?.metadata || await conn.groupMetadata(m.chat).catch(() => null)) : null
-  const resolveFromParticipants = (key) => {
-    if (!groupMetadata) return key
-    const p = groupMetadata.participants?.find(
-      x => x.jid === key || x.lid === key || x.iid === key
-    )
-    return p?.jid || key
-  }
-
-  let targets = []
-
-  if (m.mentionedJid?.length) targets.push(...m.mentionedJid)
-
-  // Dari quoted
-  if (m.quoted?.sender) targets.push(m.quoted.sender)
-
-  // Dari args: dukung "lid:12345", angka polos, JID penuh
-  for (const a of args) {
-    if (/^lid:\d+$/.test(a)) {
-      // ubah ke bentuk akun LID WA
-      const lidKey = a.replace(/^lid:/, '') + '@lid.whatsapp.net'
-      targets.push(lidKey)
-      continue
+let handler = async (m, { conn, text, isROwner }) => {
+    if (!text) throw 'Siapa yang mau di banned?🗿';
+    if (!isROwner) return conn.reply(m.chat, 'Lu Tuh Bukan Owner Jan So A6 ', m) 
+    let who;
+    if (m.isGroup) {
+        if (m.mentionedJid.length > 0) {
+            who = m.mentionedJid[0];
+        } else {
+            let cleanedNumber = text.replace(/\D/g, ''); 
+            who = `${cleanedNumber}@s.whatsapp.net`;
+        }
+    } else {
+        let cleanedNumber = text.replace(/\D/g, '');
+        who = `${cleanedNumber}@s.whatsapp.net`;
     }
 
-    // normalizeJid versi handler.js paham angka & JID
-    const j = nz(a)
-    if (j) targets.push(j)
-  }
-  targets = [...new Set(targets)]
-    .map(j => resolveFromParticipants(j))
-    .filter(j => j && !areJidsSameUser(j, conn.user?.jid || conn.user?.id))
+    let users = db.data.users;
+    if (!users[who]) throw 'Pengguna tidak ditemukan';
 
-  if (!targets.length) return m.reply('Tidak ada ID pengguna yang valid.')
-
-  // Pastikan db path sesuai handler.js
-  if (!global.db.data) global.db.data = {}
-  if (!global.db.data.users) global.db.data.users = {}
-
-  const now = Date.now()
-  const until = days > 0 ? (now + days * 24 * 60 * 60 * 1000) : 0 // 0 = permanen
-
-  for (const jid of targets) {
-    if (!global.db.data.users[jid]) global.db.data.users[jid] = {}
-    const user = global.db.data.users[jid]
-    user.banned = true
-    user.bannedTime = until
-  }
-
-  await m.reply(
-    `✅ Sukses banned ${targets.map(u => '@' + u.split('@')[0]).join(', ')}${days ? ` selama ${days} hari` : ' permanen'}`,
-    false,
-    { mentions: targets }
-  )
+    users[who].banned = true;
+    conn.reply(m.chat, `Pengguna dengan nomor ${who} telah dibanned!`, m);
 }
 
-handler.help = ['ban', 'banuser']
+handler.help = ['ban <nomor>']
 handler.tags = ['owner']
-handler.command = /^(ban|banuser)$/i
-handler.rowner = true
+handler.command = /^ban$/i
 
-export default handler
+export default handler;

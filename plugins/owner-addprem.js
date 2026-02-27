@@ -1,77 +1,27 @@
-import { jidNormalizedUser } from '@rexxhayanasi/elaina-baileys'
-
-let handler = async (m, { conn, args, usedPrefix, command }) => {
-
-    let rawWho = m.mentionedJid && m.mentionedJid[0]
-        ? m.mentionedJid[0]
-        : m.quoted
-            ? m.quoted.sender
-            : args[0]
-                ? args[0].replace(/[^0-9]/g, '') + '@s.whatsapp.net'
-                : false
-
-    if (!rawWho) return m.reply('Masukan Nomor Atau Tag Orangnya!')
-
-    let who = jidNormalizedUser(rawWho)
-
-    if (!global.db.data.users[who]) {
-        global.db.data.users[who] = {
-            premium: false,
-            premiumTime: 0,
-            name: who.split('@')[0],
-        }
-    }
-
-    let user = global.db.data.users[who]
-
-    let contact = conn.store?.contacts?.[who]
-    if (contact) {
-        user.name = contact.notify || contact.name || contact.vname || who.split('@')[0]
-    } else {
-        user.name = user.name || who.split('@')[0]
-    }
-
-    let txt = args[1]
-    if (!txt) return m.reply('Masukan Jumlah Hari Yang Ingin Diberikan')
-    if (isNaN(txt)) return m.reply(`Hanya Angka!\n\nContoh :\n${usedPrefix + command} @${sender.split`@`[0]} 7`)
-
-    let jumlahHari = 86400000 * parseInt(txt)
-    let now = Date.now()
-
+let handler = async (m, { conn, text, usedPrefix, command }) => {
+    let who
+    if (m.isGroup) who = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : false
+    else who = m.chat
+    let user = db.data.users[who]
+    if (!who) throw `tag or mention someone!`
+    let txt = text.replace('@' + who.split`@`[0], '').trim()
+    if (!txt) throw `where the number of days?`
+    if (isNaN(txt)) return m.reply(`only number!\n\nexample:\n${usedPrefix + command} @${m.sender.split`@`[0]} 7`)
+    var jumlahHari = 86400000 * txt
+    var now = new Date() * 1
     if (now < user.premiumTime) user.premiumTime += jumlahHari
     else user.premiumTime = now + jumlahHari
-
-    user.premium = true
-
-    let timers = user.premiumTime - now
-
-    function msToTime(duration) {
-        let seconds = Math.floor((duration / 1000) % 60)
-        let minutes = Math.floor((duration / (1000 * 60)) % 60)
-        let hours = Math.floor((duration / (1000 * 60 * 60)) % 24)
-        let days = Math.floor(duration / (1000 * 60 * 60 * 24))
-
-        return `${days} hari ${hours} jam ${minutes} menit ${seconds} detik`
-    }
-
-    await conn.reply(who, `✔️ Success! Kamu Sekarang User Premium!
+user.premium = true
+    m.reply(`✔️ Success
 📛 *Name:* ${user.name}
-📆 *Days:* ${txt} hari
-📉 *Countdown:* ️ ${msToTime(timers)}`, false)
-
-    await delay(2000)
-
-    await m.reply(`✔️ Success
-📛 *Name:* ${user.name}
-📆 *Days:* ${txt} hari
-📉 *Countdown:* ️ ${msToTime(timers)}`)
+📆 *Days:* ${txt} days
+📉 *Countdown:* ${user.premiumTime - now}`)
 }
-
-handler.help = ['addprem']
+handler.help = ['addprem [@user] <days>']
 handler.tags = ['owner']
-handler.command = /^(add(prem|premium))$/i
-handler.owner = true
+handler.command = /^(add|tambah|\+)p(rem)?$/i
+
+handler.group = true
+handler.rowner = true
 
 export default handler
-
-const delay = time => new Promise(res => setTimeout(res, time))
